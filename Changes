@@ -1,5 +1,11 @@
 Revision history for Perl extension autobox
 
+2.83 Sun Feb 1 21:34:01 2015
+    - RT #100247: fix assertion failures on 5.21.x perls with -DDEBUGGING
+      (thanks, ilmari and Father Chrysostomos)
+    - RT #100717: don't hide autobox::universal from PAUSE (thanks, ppisar)
+    - RT #89754: INSTALLDIRS fix (thanks, Kent Fredric)
+
 2.82 Sat Oct 26 12:44:52 2013
     - simplify test to avoid portability woes
 
@@ -9,6 +15,7 @@ Revision history for Perl extension autobox
 2.80 Fri Oct 25 19:32:12 2013
     - RT #71777: fix segfault in destructor called during global destruction (thanks, Tomas Doran)
         - added t/rt_71777.t
+    - fix doc typo (thanks, David Steinbrunner)
 
 2.79 Tue Apr 30 21:22:05 2013
     - allow import arguments to be passed as a hashref
