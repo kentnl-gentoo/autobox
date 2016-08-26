@@ -45,10 +45,10 @@ autobox - call methods on native types
 
 =head1 DESCRIPTION
 
-The autobox pragma allows methods to be called on integers, floats, strings, arrays,
+The C<autobox> pragma allows methods to be called on integers, floats, strings, arrays,
 hashes, and code references in exactly the same manner as blessed references.
 
-The autoboxing is transparent: boxed values are not blessed into their (user-defined)
+Autoboxing is transparent: values are not blessed into their (user-defined)
 implementation class (unless the method elects to bestow such a blessing) - they simply
 use its methods as though they are.
 
@@ -544,13 +544,13 @@ used within perl). This value is used by C<autobox> to associate a method invoca
 
     use autobox::universal qw(type);
 
-    type("Hello, world!") # STRING
-    type(42)              # INTEGER
-    type([])              # ARRAY
-    type(sub { })         # CODE
+    type("42")  # STRING
+    type(42)    # INTEGER
+    type(42.0)  # FLOAT
+    type(undef) # UNDEF
 
 C<autobox::universal> is loaded automatically by C<autobox>, and, as its name suggests, can be used to install
-a universal method (i.e. a method for all C<autobox> types) e.g.
+a universal C<type> method for autoboxed values e.g.
 
     use autobox UNIVERSAL => 'autobox::universal';
 
@@ -562,7 +562,7 @@ a universal method (i.e. a method for all C<autobox> types) e.g.
 
 =head2 Performance
 
-Autoboxing comes at a price. Calling
+Calling
 
     "Hello, world!"->length()
 
@@ -604,7 +604,7 @@ The same applies for signed integer and float literals:
 Perl's special-casing for the C<print BLOCK ...> syntax (see L<perlsub>) means that C<print { expression() } ...>
 (where the curly brackets denote an anonymous HASH ref) may require some further disambiguation:
 
-    # this works (
+    # this works
     print { foo => 'bar' }->foo();
 
     # and this
@@ -638,7 +638,7 @@ to C<print()>:
 
 =head3 eval EXPR
 
-Like most pragmas, autobox performs operations at compile time, and,
+Like most pragmas, C<autobox> performs operations at compile time, and,
 as a result, runtime string C<eval>s are not executed within its scope i.e. this
 doesn't work:
 
@@ -646,7 +646,7 @@ doesn't work:
 
     eval "42->foo";
 
-The workaround is to use autobox within the C<eval> e.g.
+The workaround is to use C<autobox> within the C<eval> e.g.
 
     eval <<'EOS';
         use autobox;
@@ -661,7 +661,7 @@ Note that the C<eval BLOCK> form works as expected:
 
 =head1 VERSION
 
-2.83
+2.84
 
 =head1 SEE ALSO
 
@@ -683,7 +683,7 @@ chocolateboy <chocolate@cpan.org>
 
 =head1 COPYRIGHT
 
-Copyright (c) 2003-2015, chocolateboy.
+Copyright (c) 2003-2016, chocolateboy.
 
 This module is free software. It may be used, redistributed
 and/or modified under the same terms as Perl itself.
